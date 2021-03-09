@@ -9,29 +9,48 @@
     <style type="text/css">
         body {
             margin: 0;
+            color: #191f23;
             font-family: Arial, Helvetica, sans-serif;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
         }
 
-        header {
+        .header {
             background-color: white;
-            height: 64px;
-            width: 100%;
             border-bottom: 1px solid;
             border-bottom-color: #e1e9ef;
-            position: fixed;
-            box-sizing: border-box;
+            height: 63px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            position: absolute;
         }
 
-        #header2 {
-            background-color: white;
+        .header1 {
             height: 64px;
-            width: 100%;
-            position: center;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
+            width: 1440px;
             align-items: center;
+            display: flex;
+            padding: 0px 16px;
+            height: 64px;
+            max-width: 100%;
+        }
 
+        .header2 {
+            box-sizing: border-box;
+            height: 64px;
+            width: 50%;
+            display: flex;
+            flex-grow: 0;
+            align-items: center;
+            float: left;
+        }
+
+        .header3 {
+            display: flex;
+        }
+
+        .header4 {
         }
 
         #box {
@@ -51,34 +70,97 @@
             max-width: 435px;
             box-shadow: 0px 4px 8px;
         }
+
         main {
             width: 100%;
             background-image: url("desktop.png");
             background-repeat: no-repeat;
             height: 70vh;
             background-size: cover;
-
         }
-        #logo {
+
+        .logo {
             width: 1em;
             height: 1em;
-            margin-right: 32px;
+            margin-left: 32px;
             font-size: 40px;
             cursor: pointer;
             color: rgb(255, 119, 74);
             fill: currentColor;
         }
+
+        .seta {
+            fill: #191f23;
+            margin-left: 8px;
+            width: 16px;
+            height: 16px;
+        }
+
+        .flex-end {
+            justify-content: flex-end;
+        }
+
+        .flex-start {
+            justify-content: flex-start;
+        }
+
+        .space-between {
+            justify-content: space-between;
+        }
+
+        .item {
+            font-family: HelveticaNowText-Regular,Arial,sans-serif;
+            height: 100%;
+            padding: 0 16px;
+            font-size: 16px;
+            border-bottom: 4px solid transparent;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 420px;
+            margin: 0 auto;
+            display: flex;
+            border: 1px solid #ccc;
+        }
+
+        @media only screen and (max-width: 360px) {
+        }
     </style>
 </head>
 <body>
-    <header>
-        <div id="`header2">
-            <div id="logo">
+    <header space-between>
+    <section class="header1">
+        <div class="header2 flex-start">
+            <div class="logo">
                 <svg class="MuiSvgIcon-root jss11" focusable="false" viewBox="0 0 140 119" color="#FF774A" role="img" style="font-size:40px"><g fill-rule="evenodd"><polygon points="139.879 44.876 131.05 44.876 131.05 28.52 118.437 28.52 118.437 98.567 131.05 98.567 131.05 57.384 139.879 57.384"></polygon><path d="M90.6315856,119.840822 L78.018973,119.840822 L78.018973,27.6728524 C78.018973,12.9617512 90.087982,0.991235202 104.922937,0.991235202 L104.922937,13.4996113 C97.0425766,13.4996113 90.6315856,19.8576189 90.6315856,27.6728524 L90.6315856,119.840822 Z"></path><path d="M71.6580365,44.8761224 L112.073027,44.8761224 L108.497351,57.3844985 L71.6580365,57.3844985 C68.8358742,68.510984 58.6626658,76.7724816 46.5798919,76.7724816 C32.3225946,76.7724816 20.724036,65.2697789 20.724036,51.1303105 C20.724036,36.9908421 32.3225946,25.4881394 46.5798919,25.4881394 C58.6626658,25.4881394 68.8358742,33.749637 71.6580365,44.8761224 Z M32.0753874,51.1303105 C32.0753874,59.0618718 38.5822342,65.514943 46.5798919,65.514943 C54.5775495,65.514943 61.0843964,59.0618718 61.0843964,51.1303105 C61.0843964,43.1987492 54.5775495,36.7456779 46.5798919,36.7456779 C38.5822342,36.7456779 32.0753874,43.1987492 32.0753874,51.1303105 Z"></path><path d="M34.9076757,97.7300156 C15.6595676,97.7300156 -0.000252252253,82.1996158 -0.000252252253,63.1093321 L-0.000252252253,28.5199196 L12.6123604,28.5199196 L12.6123604,63.1093321 C12.6123604,75.3012464 22.6141622,85.2216395 34.9076757,85.2216395 L34.9076757,97.7300156 Z"></path></g><title>Loft</title></svg>
             </div>
         </div>
-    </header>
+        <div class="header2 flex-end">
+            <div class="item">Comprar
+                <div class="seta">
+                    <svg width="16px" height="16px" class="jss186" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 14.61L17.3124 9.28995C17.6985 8.90335 18.3244 8.90335 18.7104 9.28995C19.0965 9.67656 19.0965 10.3034 18.7104 10.69L12.699 16.71C12.3612 17.0483 11.8398 17.0906 11.4561 16.8369C11.4012 16.8007 11.3492 16.7584 11.301 16.71L5.28954 10.69C4.90349 10.3034 4.90349 9.67656 5.28954 9.28995C5.67559 8.90335 6.3015 8.90335 6.68755 9.28995L12 14.61Z" fill="#191F23"></path></svg>
+                </div>
+            </div>
+            <div class="item">Vender</div>
+            <div class="item">Reformar</div>
+            <div class="item">Corretores</div>
+            <div class="item">Crédito
+                <div class="seta">
+                    <svg width="16px" height="16px" class="jss186" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 14.61L17.3124 9.28995C17.6985 8.90335 18.3244 8.90335 18.7104 9.28995C19.0965 9.67656 19.0965 10.3034 18.7104 10.69L12.699 16.71C12.3612 17.0483 11.8398 17.0906 11.4561 16.8369C11.4012 16.8007 11.3492 16.7584 11.301 16.71L5.28954 10.69C4.90349 10.3034 4.90349 9.67656 5.28954 9.28995C5.67559 8.90335 6.3015 8.90335 6.68755 9.28995L12 14.61Z" fill="#191F23"></path></svg>
+                </div>
+            </div>
+            <div class="item">Mais
+                <div class="seta">
+                    <svg width="16px" height="16px" class="jss186" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 14.61L17.3124 9.28995C17.6985 8.90335 18.3244 8.90335 18.7104 9.28995C19.0965 9.67656 19.0965 10.3034 18.7104 10.69L12.699 16.71C12.3612 17.0483 11.8398 17.0906 11.4561 16.8369C11.4012 16.8007 11.3492 16.7584 11.301 16.71L5.28954 10.69C4.90349 10.3034 4.90349 9.67656 5.28954 9.28995C5.67559 8.90335 6.3015 8.90335 6.68755 9.28995L12 14.61Z" fill="#191F23"></path></svg>
+                </div>
+            </div>
+            <div class="item">Entrar</div>
+        </div>
+    </section>
+    </header space-between>
 
+    <main></main>
     <main></main>
 
 </body>
