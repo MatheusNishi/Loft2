@@ -11,8 +11,6 @@
             margin: 0;
             color: #191f23;
             font-family: Arial, Helvetica, sans-serif;
-            text-rendering: optimizeLegibility;
-            -webkit-font-smoothing: antialiased;
         }
 
         header {
@@ -24,35 +22,52 @@
         }
 
         main {
-            width: 100%;
-            background-image: url("imagem/desktop.png");
-            background-repeat: no-repeat;
-            height: 70vh;
-            background-size: cover;
-            position: fixed;
-            display: flex;
-        }
-
-        .conteiner {
             width: 1440px;
-            height: 100%;
             margin: 0 auto;
+            position: relative;
             display: flex;
+            justify-content: space-around;
+            height: 100%;
+            text-align: initial;
+            align-items: center;
             justify-content: space-around;
         }
 
-        .conteiner2 {
+        .principal {
+            width: 100%;
+            background-image: url("imagem/desktop.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            height: 70vh;
+        }
+
+        .conteiner {
+            max-width: 420px;
+            vertical-align: middle;
+        }
+
+        .conteiner1 {
             font-size: 3.5rem;
             line-height: 4.25rem;
             margin-bottom: 16px;
-            font-family: HelveticaNowDisplay,Arial,sans-serif;
+            font-family: 'HelveticaNowDisplay-ExtraBold',Arial,sans-serif;
             font-weight: 700;
             color: white;
-
+            letter-spacing: 0;
+            display: block;
+            text-align: initial;
         }
 
-        .conteiner3 {
-
+        .conteiner2 {
+            font-family: 'HelveticaNowText-Regular',Arial,sans-serif;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            color: white;
+            margin-bottom: 40px;
         }
 
         .header1 {
@@ -67,7 +82,6 @@
             flex-flow: row nowrap;
             flex-basis: 100%;
             flex-grow: 0;
-            max-width: 100%;
         }
 
         .header2 {
@@ -80,21 +94,45 @@
         }
 
         .box {
-            background-color: gray;
+            background-color: white;
             height: 518px;
             width: 435px;
+            border: 1px solid #e1e9ef;
             border-radius: 24px;
+            margin: 0 16px;
             max-width: 435px;
-            box-shadow: 0px 4px 8px;
+            box-shadow: 0px 4px 8px #19202433;
+            position: page;
+            padding: 40px 32px;
+            display: flex;
+            box-sizing: border-box;
         }
 
-        .box2 {
-            background-color: gray;
-            height: 414px;
-            width: 435px;
-            border-radius: 24px;
-            max-width: 435px;
-            box-shadow: 0px 4px 8px;
+        .b1 {
+            padding-left: 16px;
+            padding-right: 16px;
+            font-size: 2rem;
+            line-height: 2.5rem;
+            font-family: 'HelveticaNowDisplay-ExtraBold', Arial, sans-serif;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-align: left;
+            color: #191f23;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        .b1a{
+
+        }
+
+        .b2 {
+            margin-top: 16px;
+            padding-left: 16px;
+            padding-right: 16px;
+            flex-grow: 0;
+            max-width: 100%;
+            flex-basis: 100%;
         }
 
         .logo {
@@ -122,6 +160,10 @@
         }
 
         .item {
+            font-family: 'HelveticaNowText-Regular',Arial,sans-serif;
+            font-weight: normal;
+            color: #191f23;
+            letter-spacing: 0;
             height: 60px;
             margin: 0 auto;
             text-align: center;
@@ -133,6 +175,9 @@
         }
 
         .itemexclusivo {
+            font-family: 'HelveticaNowText-Regular',Arial,sans-serif;
+            font-weight: normal;
+            color: #191f23;
             height: 60px;
             margin: 0 auto;
             text-align: center;
@@ -152,6 +197,13 @@
             border-bottom-color: #ff774a;
         }
 
+        .opcao {
+            height: 40px;
+            width: 40px;
+            display: none;
+            margin: 0 auto;
+        }
+
         @media only screen and (max-width: 600px) {
             main {
                 background-image: url("imagem/mobile.png");
@@ -163,10 +215,40 @@
             .logo{
                 font-size: 32px;
             }
+
+            .item{
+                display: none;
+            }
+
+            .itemexclusivo {
+                display: none;
+            }
+
+            .opcao {
+                display: flex;
+            }
+
+            .box {
+                padding: 24px 16px;
+            }
         }
 
         @media only screen and (max-width: 1280px) {
         }
+
+        @font-face {
+            font-family: 'HelveticaNowDisplay-ExtraBold';
+            src: url('font/HelveticaNowDisplay-ExtraBold.ttf') format('truetype');
+            font-weight: 800;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'HelveticaNowText-Regular';
+            src: url('font/HelveticaNowText-Regular.ttf') format('truetype');
+        }
+
+
     </style>
 </head>
 <body>
@@ -214,13 +296,27 @@
                 <div class="subitem">
                     <div class="itemexclusivo">Entrar</div>
                 </div>
+
+                <div class="opcao">
+                    <svg width="24px" height="24px" class="jss186" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.5 5C4.67157 5 4 5.67157 4 6.5C4 7.32843 4.67157 8 5.5 8H18.5C19.3284 8 20 7.32843 20 6.5C20 5.67157 19.3284 5 18.5 5H5.5Z" fill="#191F23"></path><path d="M4 11.5C4 10.6716 4.67157 10 5.5 10H18.5C19.3284 10 20 10.6716 20 11.5C20 12.3284 19.3284 13 18.5 13H5.5C4.67157 13 4 12.3284 4 11.5Z" fill="#191F23"></path><path d="M4 16.5C4 15.6716 4.67157 15 5.5 15H18.5C19.3284 15 20 15.6716 20 16.5C20 17.3284 19.3284 18 18.5 18H5.5C4.67157 18 4 17.3284 4 16.5Z" fill="#191F23"></path></svg>
+                </div>
             </div>
         </section>
     </header>
 
-    <main>
-        <div class="conteiner"><div class="conteiner2">Apês sem mistérios</div></div>
-    </main>
+    <div class="principal">
+        <main>
+            <div class="conteiner">
+                <div class="conteiner1">Apês sem mistérios</div>
+                <div class="conteiner2">Encontre o seu apartamento com toda a facilidade e a assessoria da Loft.</div>
+            </div>
+            <div class="box">
+                <div class="b1">
+                    Encontre o apartamento dos seus sonhos
+                </div>
+            </div>
+        </main>        
+    </div>
 
 </body>
 </html>
