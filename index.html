@@ -36,7 +36,6 @@
             background-image: url("imagem/desktop.png");
             background-repeat: no-repeat;
             background-size: cover;
-            position: fixed;
             display: flex;
             align-items: center;
             justify-content: space-around;
@@ -283,6 +282,12 @@
             align-items: center;
         }
 
+        .espaco {
+            background-color: white;
+            width: 100%;
+            height: 230px;
+        }
+
         @media only screen and (max-width: 600px) {
             main {
                 width: 360px;
@@ -384,6 +389,10 @@
                 padding: 12px 24px;
             }
 
+            .espaco {
+                height: 0px;
+            }
+
         }
 
         @font-face {
@@ -478,6 +487,8 @@
             </div>
         </main>        
     </div>
+
+    <div class="espaco"></div>
 
 </body>
 </html>
