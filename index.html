@@ -9,16 +9,16 @@
     <style type="text/css">
         body {
             margin: 0;
-            color: #191f23;
         }
 
         header {
-            z-index: 3;
             background-color: white;
             border-bottom: 1px solid;
             border-bottom-color: #e1e9ef;
             height: 63px;
             width: 100%;
+            position: fixed;
+            top: 0;
         }
 
         main {
@@ -32,6 +32,7 @@
         }
 
         .principal {
+            margin-top: 64px;
             width: 100%;
             background-image: url("imagem/desktop.png");
             background-repeat: no-repeat;
@@ -143,13 +144,12 @@
 
         .b2b {
             display: inline-flex;
-            box-sizing: border-box;
             background: #f3f7fa;
             border: 1px solid #B7C8D5;
             border-radius: 8px;
-            padding: 11px;
-            padding-right: 39px;
             width: 100%;
+            align-items: center;
+            box-sizing:border-box;
         }
 
         .b2b1 {
@@ -158,14 +158,18 @@
             line-height: 1.5rem;
             font-family: HelveticaNowText-Regular,Arial,sans-serif;
             text-align: left;
+            padding: 11px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .b2b2 {
             fill: #879dac;
-            top: calc(50% - 12px);
-            right: 0;
+            margin-right: 11px;
+            width: 24px;
+            height: 24px;
             display: flex;
-            margin-right: 12px;
+            position: relative;
             box-sizing: border-box;
         }
 
@@ -390,7 +394,7 @@
             }
 
             .espaco {
-                height: 0px;
+                display: none;
             }
 
         }
@@ -478,7 +482,7 @@
                     <div class="b2a b2a1">Bairro</div>
                     <div class="b2b">
                         <div class="b2b1">Selecione</div>
-                        <div class="b2b2"><svg width="24px" height="24px" class="jss190 jss323" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 14.61L17.3124 9.28995C17.6985 8.90335 18.3244 8.90335 18.7104 9.28995C19.0965 9.67656 19.0965 10.3034 18.7104 10.69L12.699 16.71C12.3612 17.0483 11.8398 17.0906 11.4561 16.8369C11.4012 16.8007 11.3492 16.7584 11.301 16.71L5.28954 10.69C4.90349 10.3034 4.90349 9.67656 5.28954 9.28995C5.67559 8.90335 6.3015 8.90335 6.68755 9.28995L12 14.61Z" fill="#191F23"></path></svg></div>
+                        <div class="b2b2"><svg xmlns="http://www.w3.org/2000/svg"><path d="M12 14.61L17.3124 9.28995C17.6985 8.90335 18.3244 8.90335 18.7104 9.28995C19.0965 9.67656 19.0965 10.3034 18.7104 10.69L12.699 16.71C12.3612 17.0483 11.8398 17.0906 11.4561 16.8369C11.4012 16.8007 11.3492 16.7584 11.301 16.71L5.28954 10.69C4.90349 10.3034 4.90349 9.67656 5.28954 9.28995C5.67559 8.90335 6.3015 8.90335 6.68755 9.28995L12 14.61Z"></path></svg></div>
                     </div>
                     <div class="b2c">Buscar apartamentos</div>
 
