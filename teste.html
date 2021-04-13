@@ -9,12 +9,21 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
 
-        
+
     </script>
 
     <style type="text/css">
         body {
             margin: 0;
+        }
+
+        .backlogin {
+            background-color: rgba(117, 190, 218, 0.5);
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: 5;
+            display: none;
         }
 
         header {
@@ -233,6 +242,13 @@
             justify-content: flex-start;
         }
 
+        .flex-center {
+            justify-content: center;
+            align-content: space-around;
+            display: flex;
+            height: 100%;
+        }
+
         .item {
             font-family: 'HelveticaNowText-Regular',Arial,sans-serif;
             font-weight: normal;
@@ -288,17 +304,15 @@
             background-color: white;
             padding: 15px;
             box-shadow: 0px 8px 16px #5364703d, 0px 1px 4px #53647066;
-            z-index: 1;
+            z-index: 10;
             font-family: HelveticaNowText-Regular,Arial,sans-serif;
             display: none;
             position: fixed;
             align-items: center;
             align-content: center;
-            right: 240px;
             border-radius: 8px;
             box-sizing: border-box;
             flex-direction: column;
-            flex-grow: 2;
         }
 
         .logartitulo {
@@ -307,24 +321,24 @@
         }
 
         .login.show {
-            display: block;
+            display: flex;
         }
 
         .logar {
             display: block;
         }
 
-        .logar.hidden {
-            display: none;
-        }
+            .logar.hidden {
+                display: none;
+            }
 
         .criar {
             display: none;
         }
 
-        .criar.show {
-            display: block;
-        }
+            .criar.show {
+                display: block;
+            }
 
         .criarconta {
             cursor: pointer;
@@ -343,6 +357,8 @@
             font-size: 20px;
             font-weight: bold;
         }
+
+
 
         @media only screen and (max-width: 600px) {
             main {
@@ -464,6 +480,7 @@
     </style>
 </head>
 <body>
+    <div class="backlogin"></div>
     <header>
         <section class="header1">
             <div class="header2 flex-start">
@@ -516,31 +533,33 @@
         </section>
     </header>
 
-    <div class="login">
-        <div class="fechar">X</div>
-        <div class="logar">
-            <div class="logartitulo">Entrar</div><br>
-            <div>Usuário</div>
-            <input type="text" name="usuario" placeholder="user" /><br><br>
-            <div>Senha</div>
-            <input type="password" name="senha" placeholder="*****" /><br><br>
-            <input type="submit" name="butaologar" value="Enviar" /><br><br>
-            <div class="criarconta">Criar Conta</div>
+
+    <main>
+        <div class="flex-center">
+            <div class="login">
+                <div class="fechar">X</div>
+                <div class="logar">
+                    <div class="logartitulo">Entrar</div><br>
+                    <div>Usuário</div>
+                    <input type="text" name="usuario" placeholder="user" /><br><br>
+                    <div>Senha</div>
+                    <input type="password" name="senha" placeholder="*****" /><br><br>
+                    <input type="submit" name="butaologar" value="Enviar" /><br><br>
+                    <div class="criarconta">Criar Conta</div>
+                </div>
+                <div class="criar">
+                    <div class="logartitulo">Criar Conta</div><br>
+                    <div>Usuário</div>
+                    <input type="text" name="usuario" value="" /><br><br>
+                    <div>Email</div>
+                    <input type="text" name="email" value="" /><br><br>
+                    <div>Senha</div>
+                    <input type="password" name="senha" value="" /><br><br>
+                    <input type="submit" name="butaocriar" value="Enviar" /><br><br>
+                </div>
+            </div>
         </div>
-        <div class="criar">
-            <div class="logartitulo">Criar Conta</div><br>
-            <div>Usuário</div>
-            <input type="text" name="usuario" value="" /><br><br>
-            <div>Email</div>
-            <input type="text" name="email" value="" /><br><br>
-            <div>Senha</div>
-            <input type="password" name="senha" value="" /><br><br>
-            <input type="submit" name="butaocriar" value="Enviar" /><br><br>
-        </div>
-    </div>
-
-
-
+    </main>
 
     <div class="principal">
         <main>
@@ -580,8 +599,9 @@
 
         entrar.addEventListener("click", function () {
             loginbox.className = 'login show';
-            logar.className = 'logar'
-            criar.className = 'criar'
+            logar.className = 'logar';
+            criar.className = 'criar';
+
         });
 
         fechar.addEventListener("click", function () {
