@@ -104,6 +104,10 @@
             box-sizing: border-box;
         }
 
+        .box.hidden {
+            display: none;
+        }
+
         .b1 {
             padding-left: 16px;
             padding-right: 16px;
@@ -257,6 +261,28 @@
             cursor: pointer;
         }
 
+        .itemexclusivo.hidden {
+            display: none;
+        }
+
+        .itemexclusivosair {
+            font-family: 'HelveticaNowText-Regular',Arial,sans-serif;
+            font-weight: normal;
+            color: #191f23;
+            height: 60px;
+            margin: 0 auto;
+            text-align: center;
+            display: none;
+            font-size: 1rem;
+            border-bottom: 4px solid transparent;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .itemexclusivosair.show {
+            display: flex;
+        }
+
         .subitem {
             height: 64px;
             padding: 0 16px;
@@ -338,6 +364,14 @@
             cursor: pointer;
             font-size: 20px;
             font-weight: bold;
+        }
+
+        .logado {
+            display: none;
+        }
+
+        .logado.show {
+            display: block;
         }
 
         @media only screen and (max-width: 600px) {
@@ -503,6 +537,7 @@
                 </div>
                 <div class="subitem">
                     <div class="itemexclusivo">Entrar</div>
+                    <div class="itemexclusivosair">Sair</div>
                 </div>
 
                 <div class="opcao">
@@ -516,15 +551,15 @@
         <div class="fechar">X</div>
         <div class="logar">
             <div class="logartitulo">Entrar</div><br>
-            <input type="text" id="mail" placeholder="Seu email" /><br><br>
-            <input type="password" id="senha" placeholder="Sua senha" /><br><br>
+            <input type="text" id="emaillogar" placeholder="Seu email" /><br><br>
+            <input type="password" id="senhalogar" placeholder="Sua senha" /><br><br>
             <input type="submit" id="botaologar" value="Enviar" /><br><br>
             <div class="criarconta">Criar Conta</div>
         </div>
         <div class="criar">
             <div class="logartitulo">Criar Conta</div><br>
-            <input type="text" id="mail" placeholder="Seu email" /><br><br>
-            <input type="password" id="senha" placeholder="Sua senha" /><br><br>
+            <input type="text" id="emailcriar" placeholder="Seu email" /><br><br>
+            <input type="password" id="senhacriar" placeholder="Sua senha" /><br><br>
             <input type="submit" id="botaocriar" value="Enviar" /><br><br>
         </div>
         <span class="mensagem"></span>
@@ -553,6 +588,22 @@
                     <div class="b2c">Buscar apartamentos</div>
                 </div>
             </div>
+            <div class="box logado">
+                <div class="b1">
+                    Encontre o ashduhasudh dos seus sonhos
+                </div>
+                <div class="b2">
+                    <div class="b2a">Cidade</div>
+                    <div class="cidade">São Paulo</div>
+                    <div class="cidade">Rio de Janeiro</div>
+                    <div class="b2a b2a1">Bairro</div>
+                    <div class="b2b">
+                        <div class="b2b1">Selecione</div>
+                        <div class="b2b2"><svg xmlns="http://www.w3.org/2000/svg"><path d="M12 14.61L17.3124 9.28995C17.6985 8.90335 18.3244 8.90335 18.7104 9.28995C19.0965 9.67656 19.0965 10.3034 18.7104 10.69L12.699 16.71C12.3612 17.0483 11.8398 17.0906 11.4561 16.8369C11.4012 16.8007 11.3492 16.7584 11.301 16.71L5.28954 10.69C4.90349 10.3034 4.90349 9.67656 5.28954 9.28995C5.67559 8.90335 6.3015 8.90335 6.68755 9.28995L12 14.61Z"></path></svg></div>
+                    </div>
+                    <div class="b2c">Buscar apartamentos</div>
+                </div>
+            </div>
         </main>
     </div>
 
@@ -561,17 +612,45 @@
 
     <script type="text/javascript" charset="utf-8">
         var entrar = document.querySelector('.itemexclusivo'),
+            sair = document.querySelector('.itemexclusivosair'),
+            box = document.querySelector('.box'),
+            logado = document.querySelector('.logado'),
             fechar = document.querySelector('.fechar'),
             loginbox = document.querySelector('.login'),
             criarconta = document.querySelector('.criarconta'),
             logar = document.querySelector('.logar'),
-            criar = document.querySelector('.criar');
+            criar = document.querySelector('.criar'),
+            bcriar = document.getElementById('botaocriar'),
+            blogar = document.getElementById('botaologar'),
+            mensagem = document.querySelector('.mensagem'),
+            dados = new FormData();
+
+        function verificarLogin() {
+            if(localStorage.getItem('token') === 'QpwL5tke4Pnpja7X4'){
+                entrar.className = 'itemexclusivo hidden';
+                sair.className = 'itemexclusivosair show';
+                box.className = 'box hidden';
+                logado.className = 'box logado show';
+            } else {
+                entrar.className = 'itemexclusivo';
+                sair.className = 'itemexclusivosair';
+                box.className = 'box';
+                logado.className = 'logado';
+            }
+        }
+
+        verificarLogin();
 
         entrar.addEventListener("click", function () {
             loginbox.className = 'login show';
             logar.className = 'logar';
             criar.className = 'criar';
             mensagem.innerHTML = '';
+        });
+
+        sair.addEventListener("click", function () {
+            localStorage.removeItem('token');
+            verificarLogin();
         });
 
         fechar.addEventListener("click", function () {
@@ -585,46 +664,11 @@
             mensagem.innerHTML = '';
         })
 
-        var bcriar = document.getElementById('botaocriar'),
-            blogar = document.getElementById('botaologar'),
-            mensagem = document.querySelector('.mensagem'),
-            dados = [];
-
-
-        /* blogar.addEventListener("click", function () {
-             xhr.open("POST", "https://reqres.in/api/login", true);
-             xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
-
-             xhr.onreadystatechange = function () {//Call a function when the state changes.
-                 if (xhr.readyState == 4 && xhr.status == 200) {
-                     alert(xhr.responseText);
-                 } else if (xhr.readyState == 4 && xhr.status == 400) {
-
-                 }
-             }
-             xhr.send();
-         });
-
-         bcriar.addEventListener("click", function () {
-             xhr.open("POST", "https://reqres.in/api/register", true);
-             xhr.setRequestHeader('Content-type', 'application/json');
-
-             xhr.onreadystatechange = function () {//Call a function when the state changes.
-                 if (xhr.readyState == 4 && xhr.status == 201) {
-                     mensagem.innerHTML = xhr.responseText;
-                 } else if (xhr.readyState == 4 && xhr.status == 400) {
-                     mensagem.innerHTML = xhr.responseText;
-                 }
-             }
-             xhr.send(JSON.stringify({ "email": "hello@user.com", "password": "abacate" }));
-         });*/
-
-
         bcriar.addEventListener('click', () => {
 
             axios.post('https://reqres.in/api/register', {
-                email: 'eve.holt@reqres.in',
-                password: 'sad'
+                email: document.getElementById('emailcriar').value,
+                password: document.getElementById('senhacriar').value
             })
             .then((response) => {
                 console.log(response);
@@ -635,20 +679,28 @@
                 mensagem.innerHTML = err.response.data.error;
 
             });
+
+            
+
         });
 
         blogar.addEventListener('click', () => {
+
             axios.post('https://reqres.in/api/login', {
-                email: 'eve.holt@reqres.in',
-                password: 'cityslicka'
+                email: document.getElementById('emaillogar').value,
+                password: document.getElementById('senhalogar').value
             })
                 .then((response) => {
                     console.log(response);
                     mensagem.innerHTML = 'Login efetuado';
+                    localStorage.setItem('token', response.data.token);
+                    verificarLogin();
                 })
                 .catch((err) => {
                     mensagem.innerHTML = err.response.data.error;
                 });
+
+
         });
 
     </script>
