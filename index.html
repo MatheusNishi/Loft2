@@ -303,14 +303,14 @@
         .espaco {
             background-color: white;
             width: 100%;
-            height: 100px;
+            height: 50px;
         }
 
         .login {
             background-color: white;
             padding: 15px;
             box-shadow: 0px 8px 16px #5364703d, 0px 1px 4px #53647066;
-            z-index: 1;
+            z-index: 10;
             font-family: HelveticaNowText-Regular,Arial,sans-serif;
             display: none;
             position: fixed;
@@ -323,13 +323,14 @@
             top: 50%;
             left: 50%;
             height: 400px;
-            width: 400px;
-            margin: -200px 0px 0px -200px;
+            width: 300px;
+            margin: -200px 0px 0px -150px;
+            justify-content: space-around;
         }
 
         .logartitulo {
             font-size: 2rem;
-            font-weight: bold;
+            font-family: 'HelveticaNowDisplay-ExtraBold', Arial, sans-serif;
         }
 
         .logar {
@@ -366,6 +367,15 @@
             display: none;
         }
 
+        .blurback {
+            background: #ffffff52;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            position: absolute;
+            display: none;
+        }
+
         .showf {
             display: flex;
         }
@@ -382,6 +392,13 @@
 
         input {
             outline: 0;
+        }
+
+        .mensagemerro {
+            align-items: center;
+            align-content: center;
+            font-family: HelveticaNowText-Regular,Arial,sans-serif;
+            color: #ff3232;
         }
 
         @media only screen and (max-width: 600px) {
@@ -504,6 +521,7 @@
     </style>
 </head>
 <body>
+    <div class="blurback"></div>
     <header>
         <section class="header1">
             <div class="header2 flex-start">
@@ -561,21 +579,20 @@
         <div class="fechar">X</div>
         <div class="logar">
             <div class="logartitulo">Entrar</div><br>
-            <input type="text" id="emaillogar" placeholder="Seu email" /><br><br>
-            <input type="password" id="senhalogar" placeholder="Sua senha" /><br><br>
-            <input type="submit" id="botaologar" value="Enviar" /><br><br>
+            <input type="text" class="b2b1text" id="emaillogar" placeholder="Seu email" /><br><br>
+            <input type="password" class="b2b1text" id="senhalogar" placeholder="Sua senha" /><br><br>
+            <input type="submit" class="b2c" style="margin: 0" id="botaologar" value="Enviar" /><br><br>
             <div class="criarconta">Criar Conta</div>
         </div>
         <div class="criar">
             <div class="logartitulo">Criar Conta</div><br>
-            <input type="text" id="emailcriar" placeholder="Seu email" /><br><br>
-            <input type="password" id="senhacriar" placeholder="Sua senha" /><br><br>
-            <input type="password" id="senhaverificar" placeholder="Repita sua senha" /><br><br>
-            <input type="submit" id="botaocriar" value="Enviar" /><br><br>
+            <input type="text" class="b2b1text" id="emailcriar" placeholder="Seu email" /><br><br>
+            <input type="password" class="b2b1text" id="senhacriar" placeholder="Sua senha" /><br><br>
+            <input type="password" class="b2b1text" id="senhaverificar" placeholder="Repita sua senha" /><br><br>
+            <input type="submit" class="b2c" style="margin: 0" id="botaocriar" value="Enviar" /><br><br>
         </div>
         <span class="mensagem"></span>
     </div>
-
 
     <div class="principal">
         <main>
@@ -610,9 +627,10 @@
                     <div class="cidade" id="pr">Paraná</div>
                     <div class="b2a b2a1">Cidade</div>
                     <div class="b2b">
-                        <input type="text" name="city" class="b2b1text" id="abc" placeholder="Digite a cidade" />
+                        <input type="text" name="city" class="b2b1text" id="buscacidade" placeholder="Digite a cidade" />
                     </div>
                     <div class="b2c" id="botaocidade">Buscar cidade</div>
+                    <span class="mensagemerro"></span>
                 </div>
             </div>
         </main>
@@ -620,11 +638,11 @@
 
     <div class="espaco"></div>
     <span class="apierro"></span>
-    <div class="grafico" id="chartDiv" style="width: 80%; height: 400px; margin: auto auto;"></div>
-
+    <div class="grafico" id="chartDiv"></div>
 
     <script type="text/javascript" charset="utf-8">
         var entrar = document.querySelector('.itemexclusivo'),
+            blurback = document.querySelector('.blurback'),
             sair = document.querySelector('.itemexclusivosair'),
             box = document.querySelector('.box'),
             logado = document.querySelector('.logado'),
@@ -640,39 +658,15 @@
             rj = document.getElementById('rj'),
             pr = document.getElementById('pr'),
             buscar = document.getElementById('botaocidade'),
-            cidade = document.getElementById('abc'),
-            apierro = document.querySelector('apierro'),
+            cidade = document.getElementById('buscacidade'),
             boxverificarsenha = document.getElementById('senhaverificar'),
             boxsenha = document.getElementById('senhacriar'),
             boxemail = document.getElementById('emailcriar'),
+            mensagemerro = document.querySelector('.mensagemerro'),
             estado,
             dados;
 
         bcriar.disabled = true;
-
-        boxverificarsenha.addEventListener('keyup', function () {
-            verificarsenha();
-        });
-
-        boxsenha.addEventListener('keyup', function () {
-            if ((boxsenha.value).length < 3) {
-                boxsenha.style.borderColor = "#f50000";
-            } else {
-                boxsenha.style.borderColor = "";
-            }
-            verificarsenha();
-        });
-
-        boxemail.addEventListener('keyup', function () {
-            verificarsenha();
-
-            if ((boxemail.value).length < 3) {
-                boxemail.style.borderColor = "#f50000";
-            } else {
-                boxemail.style.borderColor = "";
-            }
-        })
-
 
         function buscaapi() {
             var site = document.getElementsByName("city")[0].value;
@@ -681,7 +675,6 @@
 
             axios.get('https://www.quandl.com/api/v3/datasets/CITYPOP/CITY_' + sitef + estado + 'BRAZIL.json?api_key=YPQ_7Tz1GuGtRh_QK_GV')
                 .then((json) => {
-                    console.log(json);
                     dados = json.data.dataset.data;
 
                     let points = dados.map(d => {
@@ -689,9 +682,7 @@
                     });
 
                     JSC.Chart("chartDiv", {
-                        // Pass points to the series
                         series: [{ points: points }],
-                        // Set the x axis scale to time.
                         xAxis_scale_type: "time",
                         xAxis_label_text: "Ano",
                         yAxis_label_text: "População",
@@ -701,10 +692,8 @@
 
                 })
                 .catch((err) => {
-                    console.log(err);
-                    JSC.Chart("chartDiv", {
-                    });
-                    apierro.innerHTML = 'erro';
+                    JSC.Chart("chartDiv", {});
+                    mensagemerro.innerHTML = 'Cidade digitada incorretamente ou não exitente no banco de dados';
                 })
         };
 
@@ -728,10 +717,13 @@
                 password: document.getElementById('senhalogar').value
             })
                 .then((response) => {
-                    console.log(response);
                     mensagem.innerHTML = 'Login efetuado';
                     localStorage.setItem('token', response.data.token);
                     verificarLogin();
+                    window.setTimeout(function () {
+                        loginbox.className = 'login';
+                        blurback.className = 'blurback';
+                    }, 1000);
                 })
                 .catch((err) => {
                     mensagem.innerHTML = err.response.data.error;
@@ -745,11 +737,16 @@
                     password: document.getElementById('senhacriar').value
                 })
                     .then((response) => {
-                        console.log(response);
                         mensagem.innerHTML = 'Conta criada';
+                        window.setTimeout(function () {
+                            loginbox.className = 'login showf';
+                            logar.className = 'logar';
+                            criar.className = 'criar';
+                            mensagem.innerHTML = '';
+                            blurback.className = 'blurback show';
+                        }, 1000);
                     })
                     .catch((err) => {
-                        console.log(err, err.response);
                         mensagem.innerHTML = err.response.data.error;
 
                     });
@@ -770,6 +767,29 @@
             }
 
         };
+
+        boxverificarsenha.addEventListener('keyup', function () {
+            verificarsenha();
+        });
+
+        boxsenha.addEventListener('keyup', function () {
+            if ((boxsenha.value).length < 3) {
+                boxsenha.style.borderColor = "#f50000";
+            } else {
+                boxsenha.style.borderColor = "";
+            }
+            verificarsenha();
+        });
+
+        boxemail.addEventListener('keyup', function () {
+            verificarsenha();
+
+            if ((boxemail.value).length < 3) {
+                boxemail.style.borderColor = "#f50000";
+            } else {
+                boxemail.style.borderColor = "";
+            }
+        });
 
         verificarLogin();
 
@@ -795,12 +815,30 @@
         });
 
         buscar.addEventListener("click", function () {
-            buscaapi();
+            if (estado != null && cidade.value != '') {
+                buscaapi();
+                mensagemerro.innerHTML = '';
+            } else if (estado == null && cidade.value == '') {
+                mensagemerro.innerHTML = 'Faltou selecionar o estado e digitar a cidade';
+            } else if (estado == null && cidade.value != '') {
+                mensagemerro.innerHTML = 'Faltou selecionar o estado';
+            } else if (estado != null && cidade.value == '') {
+                mensagemerro.innerHTML = 'Faltou digitar a cidade';
+            }
         });
 
         cidade.addEventListener("keypress", function (e) {
             if (e.key === 'Enter') {
-                buscaapi();
+                if (estado != null && cidade.value != '') {
+                    buscaapi();
+                    mensagemerro.innerHTML = '';
+                } else if (estado == null && cidade.value == '') {
+                    mensagemerro.innerHTML = 'Faltou selecionar o estado e digitar a cidade';
+                } else if (estado == null && cidade.value != '') {
+                    mensagemerro.innerHTML = 'Faltou selecionar o estado';
+                } else if (estado != null && cidade.value == '') {
+                    mensagemerro.innerHTML = 'Faltou digitar a cidade';
+                }
             }
         });
 
@@ -809,6 +847,7 @@
             logar.className = 'logar';
             criar.className = 'criar';
             mensagem.innerHTML = '';
+            blurback.className = 'blurback show';
         });
 
         sair.addEventListener("click", function () {
@@ -817,7 +856,8 @@
         });
 
         fechar.addEventListener("click", function () {
-                loginbox.className = 'login';
+            loginbox.className = 'login';
+            blurback.className = 'blurback';
         });
 
         criarconta.addEventListener("click", function () {
