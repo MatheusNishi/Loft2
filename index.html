@@ -7,6 +7,7 @@
     <title>Compra e Venda de Apartamentos de Forma Descomplicada</title>
     <link rel="icon" type="imagem/png" href="imagem/icon.png" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jscharting.com/latest/jscharting.js"></script>
 
     <style type="text/css">
         body {
@@ -104,10 +105,6 @@
             box-sizing: border-box;
         }
 
-        .box.hidden {
-            display: none;
-        }
-
         .b1 {
             padding-left: 16px;
             padding-right: 16px;
@@ -158,6 +155,16 @@
             box-sizing: border-box;
         }
 
+        .b2b1text {
+            font-size: 1rem;
+            line-height: 1.5rem;
+            font-family: HelveticaNowText-Regular,Arial,sans-serif;
+            text-align: left;
+            padding: 11px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
         .b2b2 {
             fill: #879dac;
             margin-right: 11px;
@@ -181,6 +188,7 @@
             border-radius: 12px;
             justify-content: center;
             display: flex;
+            cursor: pointer;
         }
 
             .b2c:hover {
@@ -261,10 +269,6 @@
             cursor: pointer;
         }
 
-        .itemexclusivo.hidden {
-            display: none;
-        }
-
         .itemexclusivosair {
             font-family: 'HelveticaNowText-Regular',Arial,sans-serif;
             font-weight: normal;
@@ -277,10 +281,6 @@
             border-bottom: 4px solid transparent;
             align-items: center;
             cursor: pointer;
-        }
-
-        .itemexclusivosair.show {
-            display: flex;
         }
 
         .subitem {
@@ -328,24 +328,12 @@
             font-weight: bold;
         }
 
-        .login.show {
-            display: block;
-        }
-
         .logar {
             display: block;
         }
 
-        .logar.hidden {
-            display: none;
-        }
-
         .criar {
             display: none;
-        }
-
-        .criar.show {
-            display: block;
         }
 
         .criarconta {
@@ -370,8 +358,24 @@
             display: none;
         }
 
-        .logado.show {
+        .hidden {
+            display: none;
+        }
+
+        .showf {
+            display: flex;
+        }
+
+        .show {
             display: block;
+        }
+
+        .grafico {
+            margin: auto auto;
+            width: 80%;
+            height: 400px;
+            font-family: HelveticaNowText-Regular,Arial,sans-serif;
+            font-size: 20px;
         }
 
         @media only screen and (max-width: 600px) {
@@ -590,24 +594,26 @@
             </div>
             <div class="box logado">
                 <div class="b1">
-                    Encontre o ashduhasudh dos seus sonhos
+                    Encontre a população da cidade dos sonhos
                 </div>
                 <div class="b2">
-                    <div class="b2a">Cidade</div>
-                    <div class="cidade">São Paulo</div>
-                    <div class="cidade">Rio de Janeiro</div>
-                    <div class="b2a b2a1">Bairro</div>
+                    <div class="b2a">Estado</div>
+                    <div class="cidade" id="sp">São Paulo</div>
+                    <div class="cidade" id="rj">Rio de Janeiro</div>
+                    <div class="cidade" id="pr">Paraná</div>
+                    <div class="b2a b2a1">Cidade</div>
                     <div class="b2b">
-                        <div class="b2b1">Selecione</div>
-                        <div class="b2b2"><svg xmlns="http://www.w3.org/2000/svg"><path d="M12 14.61L17.3124 9.28995C17.6985 8.90335 18.3244 8.90335 18.7104 9.28995C19.0965 9.67656 19.0965 10.3034 18.7104 10.69L12.699 16.71C12.3612 17.0483 11.8398 17.0906 11.4561 16.8369C11.4012 16.8007 11.3492 16.7584 11.301 16.71L5.28954 10.69C4.90349 10.3034 4.90349 9.67656 5.28954 9.28995C5.67559 8.90335 6.3015 8.90335 6.68755 9.28995L12 14.61Z"></path></svg></div>
+                        <input type="text" name="city" class="b2b1text" id="abc" placeholder="Digite a cidade" />
                     </div>
-                    <div class="b2c">Buscar apartamentos</div>
+                    <div class="b2c" id="botaocidade">Buscar cidade</div>
                 </div>
             </div>
         </main>
     </div>
 
     <div class="espaco"></div>
+
+    <div class="grafico" id="chartDiv" style="width: 80%; height: 400px; margin: auto auto;"></div>
 
 
     <script type="text/javascript" charset="utf-8">
@@ -623,12 +629,77 @@
             bcriar = document.getElementById('botaocriar'),
             blogar = document.getElementById('botaologar'),
             mensagem = document.querySelector('.mensagem'),
-            dados = new FormData();
+            sp = document.getElementById('sp'),
+            rj = document.getElementById('rj'),
+            pr = document.getElementById('pr'),
+            buscar = document.getElementById('botaocidade'),
+            cidade = document.getElementById('b2b1text'),
+            estado;
+
+        let dados;
+
+
+
+
+        sp.addEventListener("click", function () {
+            sp.style.background = "#cfdfeb";
+            rj.style.background = "";
+            pr.style.background = "";
+            estado = "SP";
+        });
+
+
+        rj.addEventListener("click", function () {
+            rj.style.background = "#cfdfeb";
+            sp.style.background = "";
+            pr.style.background = "";
+            estado = "RJ";
+        });
+
+
+        pr.addEventListener("click", function () {
+            pr.style.background = "#cfdfeb";
+            rj.style.background = "";
+            sp.style.background = "";
+            estado = "PR";
+        });
+
+        buscar.addEventListener("click", function () {
+
+            var site = document.getElementsByName("city")[0].value;
+            var sitef = (site.normalize('NFD')).replace(/\s/g, '');
+            var label = site.toUpperCase();
+
+            console.log(sitef);
+
+            axios.get('https://www.quandl.com/api/v3/datasets/CITYPOP/CITY_'+ sitef + estado +'BRAZIL.json?api_key=YPQ_7Tz1GuGtRh_QK_GV')
+                .then((json) => {
+                    console.log(json);
+                    dados = json.data.dataset.data;
+                    console.log(dados);
+
+                    let points = dados.map(d => {
+                        return { x: d[0], y: d[1]};
+                    });
+
+                    JSC.Chart("chartDiv", {
+                        // Pass points to the series
+                        series: [{ points: points }],
+                        // Set the x axis scale to time.
+                        xAxis_scale_type: "time",
+                        title_label_text: label
+                    });
+
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        })
 
         function verificarLogin() {
-            if(localStorage.getItem('token') === 'QpwL5tke4Pnpja7X4'){
+            if (localStorage.getItem('token') === 'QpwL5tke4Pnpja7X4') {
                 entrar.className = 'itemexclusivo hidden';
-                sair.className = 'itemexclusivosair show';
+                sair.className = 'itemexclusivosair showf';
                 box.className = 'box hidden';
                 logado.className = 'box logado show';
             } else {
@@ -670,17 +741,17 @@
                 email: document.getElementById('emailcriar').value,
                 password: document.getElementById('senhacriar').value
             })
-            .then((response) => {
-                console.log(response);
-                mensagem.innerHTML = 'Conta criada';
-            })
-            .catch((err) => {
-                console.log(err, err.response);
-                mensagem.innerHTML = err.response.data.error;
+                .then((response) => {
+                    console.log(response);
+                    mensagem.innerHTML = 'Conta criada';
+                })
+                .catch((err) => {
+                    console.log(err, err.response);
+                    mensagem.innerHTML = err.response.data.error;
 
-            });
+                });
 
-            
+
 
         });
 

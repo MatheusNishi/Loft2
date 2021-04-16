@@ -7,23 +7,10 @@
     <title>Compra e Venda de Apartamentos de Forma Descomplicada</title>
     <link rel="icon" type="imagem/png" href="imagem/icon.png" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="text/javascript">
-
-
-    </script>
 
     <style type="text/css">
         body {
             margin: 0;
-        }
-
-        .backlogin {
-            background-color: rgba(117, 190, 218, 0.5);
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            z-index: 5;
-            display: none;
         }
 
         header {
@@ -190,6 +177,7 @@
             border-radius: 12px;
             justify-content: center;
             display: flex;
+            cursor: pointer;
         }
 
             .b2c:hover {
@@ -242,13 +230,6 @@
             justify-content: flex-start;
         }
 
-        .flex-center {
-            justify-content: center;
-            align-content: space-around;
-            display: flex;
-            height: 100%;
-        }
-
         .item {
             font-family: 'HelveticaNowText-Regular',Arial,sans-serif;
             font-weight: normal;
@@ -271,6 +252,20 @@
             margin: 0 auto;
             text-align: center;
             display: flex;
+            font-size: 1rem;
+            border-bottom: 4px solid transparent;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .itemexclusivosair {
+            font-family: 'HelveticaNowText-Regular',Arial,sans-serif;
+            font-weight: normal;
+            color: #191f23;
+            height: 60px;
+            margin: 0 auto;
+            text-align: center;
+            display: none;
             font-size: 1rem;
             border-bottom: 4px solid transparent;
             align-items: center;
@@ -304,15 +299,17 @@
             background-color: white;
             padding: 15px;
             box-shadow: 0px 8px 16px #5364703d, 0px 1px 4px #53647066;
-            z-index: 10;
+            z-index: 1;
             font-family: HelveticaNowText-Regular,Arial,sans-serif;
             display: none;
             position: fixed;
             align-items: center;
             align-content: center;
+            right: 240px;
             border-radius: 8px;
             box-sizing: border-box;
             flex-direction: column;
+            flex-grow: 2;
         }
 
         .logartitulo {
@@ -320,25 +317,13 @@
             font-weight: bold;
         }
 
-        .login.show {
-            display: flex;
-        }
-
         .logar {
             display: block;
         }
 
-            .logar.hidden {
-                display: none;
-            }
-
         .criar {
             display: none;
         }
-
-            .criar.show {
-                display: block;
-            }
 
         .criarconta {
             cursor: pointer;
@@ -358,7 +343,21 @@
             font-weight: bold;
         }
 
+        .logado {
+            display: none;
+        }
 
+        .hidden {
+            display: none;
+        }
+
+        .showf{
+            display: flex;
+        }
+
+        .show{
+            display: block;
+        }
 
         @media only screen and (max-width: 600px) {
             main {
@@ -480,7 +479,6 @@
     </style>
 </head>
 <body>
-    <div class="backlogin"></div>
     <header>
         <section class="header1">
             <div class="header2 flex-start">
@@ -524,6 +522,7 @@
                 </div>
                 <div class="subitem">
                     <div class="itemexclusivo">Entrar</div>
+                    <div class="itemexclusivosair">Sair</div>
                 </div>
 
                 <div class="opcao">
@@ -533,33 +532,24 @@
         </section>
     </header>
 
-
-    <main>
-        <div class="flex-center">
-            <div class="login">
-                <div class="fechar">X</div>
-                <div class="logar">
-                    <div class="logartitulo">Entrar</div><br>
-                    <div>Usuário</div>
-                    <input type="text" name="usuario" placeholder="user" /><br><br>
-                    <div>Senha</div>
-                    <input type="password" name="senha" placeholder="*****" /><br><br>
-                    <input type="submit" name="butaologar" value="Enviar" /><br><br>
-                    <div class="criarconta">Criar Conta</div>
-                </div>
-                <div class="criar">
-                    <div class="logartitulo">Criar Conta</div><br>
-                    <div>Usuário</div>
-                    <input type="text" name="usuario" value="" /><br><br>
-                    <div>Email</div>
-                    <input type="text" name="email" value="" /><br><br>
-                    <div>Senha</div>
-                    <input type="password" name="senha" value="" /><br><br>
-                    <input type="submit" name="butaocriar" value="Enviar" /><br><br>
-                </div>
-            </div>
+    <div class="login">
+        <div class="fechar">X</div>
+        <div class="logar">
+            <div class="logartitulo">Entrar</div><br>
+            <input type="text" id="emaillogar" placeholder="Seu email" /><br><br>
+            <input type="password" id="senhalogar" placeholder="Sua senha" /><br><br>
+            <input type="submit" id="botaologar" value="Enviar" /><br><br>
+            <div class="criarconta">Criar Conta</div>
         </div>
-    </main>
+        <div class="criar">
+            <div class="logartitulo">Criar Conta</div><br>
+            <input type="text" id="emailcriar" placeholder="Seu email" /><br><br>
+            <input type="password" id="senhacriar" placeholder="Sua senha" /><br><br>
+            <input type="submit" id="botaocriar" value="Enviar" /><br><br>
+        </div>
+        <span class="mensagem"></span>
+    </div>
+
 
     <div class="principal">
         <main>
@@ -583,6 +573,22 @@
                     <div class="b2c">Buscar apartamentos</div>
                 </div>
             </div>
+            <div class="box logado">
+                <div class="b1">
+                    Encontre o ashduhasudh dos seus sonhos
+                </div>
+                <div class="b2">
+                    <div class="b2a">Cidade</div>
+                    <div class="cidade">São Paulo</div>
+                    <div class="cidade">Rio de Janeiro</div>
+                    <div class="b2a b2a1">Bairro</div>
+                    <div class="b2b">
+                        <div class="b2b1">Selecione</div>
+                        <div class="b2b2"><svg xmlns="http://www.w3.org/2000/svg"><path d="M12 14.61L17.3124 9.28995C17.6985 8.90335 18.3244 8.90335 18.7104 9.28995C19.0965 9.67656 19.0965 10.3034 18.7104 10.69L12.699 16.71C12.3612 17.0483 11.8398 17.0906 11.4561 16.8369C11.4012 16.8007 11.3492 16.7584 11.301 16.71L5.28954 10.69C4.90349 10.3034 4.90349 9.67656 5.28954 9.28995C5.67559 8.90335 6.3015 8.90335 6.68755 9.28995L12 14.61Z"></path></svg></div>
+                    </div>
+                    <div class="b2c">Buscar apartamentos</div>
+                </div>
+            </div>
         </main>
     </div>
 
@@ -591,17 +597,45 @@
 
     <script type="text/javascript" charset="utf-8">
         var entrar = document.querySelector('.itemexclusivo'),
+            sair = document.querySelector('.itemexclusivosair'),
+            box = document.querySelector('.box'),
+            logado = document.querySelector('.logado'),
             fechar = document.querySelector('.fechar'),
             loginbox = document.querySelector('.login'),
             criarconta = document.querySelector('.criarconta'),
             logar = document.querySelector('.logar'),
-            criar = document.querySelector('.criar');
+            criar = document.querySelector('.criar'),
+            bcriar = document.getElementById('botaocriar'),
+            blogar = document.getElementById('botaologar'),
+            mensagem = document.querySelector('.mensagem'),
+            dados = new FormData();
+
+        function verificarLogin() {
+            if (localStorage.getItem('token') === 'QpwL5tke4Pnpja7X4') {
+                entrar.className = 'itemexclusivo hidden';
+                sair.className = 'itemexclusivosair showf';
+                box.className = 'box hidden';
+                logado.className = 'box logado show';
+            } else {
+                entrar.className = 'itemexclusivo';
+                sair.className = 'itemexclusivosair';
+                box.className = 'box';
+                logado.className = 'logado';
+            }
+        }
+
+        verificarLogin();
 
         entrar.addEventListener("click", function () {
             loginbox.className = 'login show';
             logar.className = 'logar';
             criar.className = 'criar';
+            mensagem.innerHTML = '';
+        });
 
+        sair.addEventListener("click", function () {
+            localStorage.removeItem('token');
+            verificarLogin();
         });
 
         fechar.addEventListener("click", function () {
@@ -610,9 +644,49 @@
         });
 
         criarconta.addEventListener("click", function () {
-            logar.className = 'logar hidden'
-            criar.className = 'criar show'
+            logar.className = 'logar hidden';
+            criar.className = 'criar show';
+            mensagem.innerHTML = '';
         })
+
+        bcriar.addEventListener('click', () => {
+
+            axios.post('https://reqres.in/api/register', {
+                email: document.getElementById('emailcriar').value,
+                password: document.getElementById('senhacriar').value
+            })
+                .then((response) => {
+                    console.log(response);
+                    mensagem.innerHTML = 'Conta criada';
+                })
+                .catch((err) => {
+                    console.log(err, err.response);
+                    mensagem.innerHTML = err.response.data.error;
+
+                });
+
+
+
+        });
+
+        blogar.addEventListener('click', () => {
+
+            axios.post('https://reqres.in/api/login', {
+                email: document.getElementById('emaillogar').value,
+                password: document.getElementById('senhalogar').value
+            })
+                .then((response) => {
+                    console.log(response);
+                    mensagem.innerHTML = 'Login efetuado';
+                    localStorage.setItem('token', response.data.token);
+                    verificarLogin();
+                })
+                .catch((err) => {
+                    mensagem.innerHTML = err.response.data.error;
+                });
+
+
+        });
 
     </script>
 
