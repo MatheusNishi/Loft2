@@ -303,7 +303,7 @@
         .espaco {
             background-color: white;
             width: 100%;
-            height: 230px;
+            height: 100px;
         }
 
         .login {
@@ -316,15 +316,19 @@
             position: fixed;
             align-items: center;
             align-content: center;
-            right: 240px;
             border-radius: 8px;
             box-sizing: border-box;
             flex-direction: column;
-            flex-grow: 2;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            height: 400px;
+            width: 400px;
+            margin: -200px 0px 0px -200px;
         }
 
         .logartitulo {
-            font-size: 20px;
+            font-size: 2rem;
             font-weight: bold;
         }
 
@@ -374,8 +378,10 @@
             margin: auto auto;
             width: 80%;
             height: 400px;
-            font-family: HelveticaNowText-Regular,Arial,sans-serif;
-            font-size: 20px;
+        }
+
+        input {
+            outline: 0;
         }
 
         @media only screen and (max-width: 600px) {
@@ -564,6 +570,7 @@
             <div class="logartitulo">Criar Conta</div><br>
             <input type="text" id="emailcriar" placeholder="Seu email" /><br><br>
             <input type="password" id="senhacriar" placeholder="Sua senha" /><br><br>
+            <input type="password" id="senhaverificar" placeholder="Repita sua senha" /><br><br>
             <input type="submit" id="botaocriar" value="Enviar" /><br><br>
         </div>
         <span class="mensagem"></span>
@@ -612,7 +619,7 @@
     </div>
 
     <div class="espaco"></div>
-
+    <span class="apierro"></span>
     <div class="grafico" id="chartDiv" style="width: 80%; height: 400px; margin: auto auto;"></div>
 
 
@@ -633,53 +640,52 @@
             rj = document.getElementById('rj'),
             pr = document.getElementById('pr'),
             buscar = document.getElementById('botaocidade'),
-            cidade = document.getElementById('b2b1text'),
-            estado;
+            cidade = document.getElementById('abc'),
+            apierro = document.querySelector('apierro'),
+            boxverificarsenha = document.getElementById('senhaverificar'),
+            boxsenha = document.getElementById('senhacriar'),
+            boxemail = document.getElementById('emailcriar'),
+            estado,
+            dados;
 
-        let dados;
+        bcriar.disabled = true;
 
-
-
-
-        sp.addEventListener("click", function () {
-            sp.style.background = "#cfdfeb";
-            rj.style.background = "";
-            pr.style.background = "";
-            estado = "SP";
+        boxverificarsenha.addEventListener('keyup', function () {
+            verificarsenha();
         });
 
-
-        rj.addEventListener("click", function () {
-            rj.style.background = "#cfdfeb";
-            sp.style.background = "";
-            pr.style.background = "";
-            estado = "RJ";
+        boxsenha.addEventListener('keyup', function () {
+            if ((boxsenha.value).length < 3) {
+                boxsenha.style.borderColor = "#f50000";
+            } else {
+                boxsenha.style.borderColor = "";
+            }
+            verificarsenha();
         });
 
+        boxemail.addEventListener('keyup', function () {
+            verificarsenha();
 
-        pr.addEventListener("click", function () {
-            pr.style.background = "#cfdfeb";
-            rj.style.background = "";
-            sp.style.background = "";
-            estado = "PR";
-        });
+            if ((boxemail.value).length < 3) {
+                boxemail.style.borderColor = "#f50000";
+            } else {
+                boxemail.style.borderColor = "";
+            }
+        })
 
-        buscar.addEventListener("click", function () {
 
+        function buscaapi() {
             var site = document.getElementsByName("city")[0].value;
             var sitef = (site.normalize('NFD')).replace(/\s/g, '');
             var label = site.toUpperCase();
 
-            console.log(sitef);
-
-            axios.get('https://www.quandl.com/api/v3/datasets/CITYPOP/CITY_'+ sitef + estado +'BRAZIL.json?api_key=YPQ_7Tz1GuGtRh_QK_GV')
+            axios.get('https://www.quandl.com/api/v3/datasets/CITYPOP/CITY_' + sitef + estado + 'BRAZIL.json?api_key=YPQ_7Tz1GuGtRh_QK_GV')
                 .then((json) => {
                     console.log(json);
                     dados = json.data.dataset.data;
-                    console.log(dados);
 
                     let points = dados.map(d => {
-                        return { x: d[0], y: d[1]};
+                        return { x: d[0], y: d[1] };
                     });
 
                     JSC.Chart("chartDiv", {
@@ -687,14 +693,20 @@
                         series: [{ points: points }],
                         // Set the x axis scale to time.
                         xAxis_scale_type: "time",
-                        title_label_text: label
+                        xAxis_label_text: "Ano",
+                        yAxis_label_text: "População",
+                        title_label_text: "POPULAÇÃO DE " + label,
+                        legend_visible: false
                     });
 
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.log(err);
+                    JSC.Chart("chartDiv", {
+                    });
+                    apierro.innerHTML = 'erro';
                 })
-        })
+        };
 
         function verificarLogin() {
             if (localStorage.getItem('token') === 'QpwL5tke4Pnpja7X4') {
@@ -708,55 +720,9 @@
                 box.className = 'box';
                 logado.className = 'logado';
             }
-        }
+        };
 
-        verificarLogin();
-
-        entrar.addEventListener("click", function () {
-            loginbox.className = 'login show';
-            logar.className = 'logar';
-            criar.className = 'criar';
-            mensagem.innerHTML = '';
-        });
-
-        sair.addEventListener("click", function () {
-            localStorage.removeItem('token');
-            verificarLogin();
-        });
-
-        fechar.addEventListener("click", function () {
-            if (loginbox.className === 'login show')
-                loginbox.className = 'login';
-        });
-
-        criarconta.addEventListener("click", function () {
-            logar.className = 'logar hidden';
-            criar.className = 'criar show';
-            mensagem.innerHTML = '';
-        })
-
-        bcriar.addEventListener('click', () => {
-
-            axios.post('https://reqres.in/api/register', {
-                email: document.getElementById('emailcriar').value,
-                password: document.getElementById('senhacriar').value
-            })
-                .then((response) => {
-                    console.log(response);
-                    mensagem.innerHTML = 'Conta criada';
-                })
-                .catch((err) => {
-                    console.log(err, err.response);
-                    mensagem.innerHTML = err.response.data.error;
-
-                });
-
-
-
-        });
-
-        blogar.addEventListener('click', () => {
-
+        function loginapi() {
             axios.post('https://reqres.in/api/login', {
                 email: document.getElementById('emaillogar').value,
                 password: document.getElementById('senhalogar').value
@@ -770,8 +736,102 @@
                 .catch((err) => {
                     mensagem.innerHTML = err.response.data.error;
                 });
+        };
 
+        function criarapi() {
 
+                axios.post('https://reqres.in/api/register', {
+                    email: document.getElementById('emailcriar').value,
+                    password: document.getElementById('senhacriar').value
+                })
+                    .then((response) => {
+                        console.log(response);
+                        mensagem.innerHTML = 'Conta criada';
+                    })
+                    .catch((err) => {
+                        console.log(err, err.response);
+                        mensagem.innerHTML = err.response.data.error;
+
+                    });
+        };
+
+        function verificarsenha() {
+
+            if (boxverificarsenha.value != boxsenha.value) {
+                boxverificarsenha.style.borderColor = "#f50000";
+            } else {
+                boxverificarsenha.style.borderColor = "";
+            }
+
+            if ((boxsenha.value).length >= 3 && (boxemail.value).length >= 3 && boxverificarsenha.value == boxsenha.value) {
+                bcriar.disabled = false;
+            } else {
+                bcriar.disabled = true;
+            }
+
+        };
+
+        verificarLogin();
+
+        sp.addEventListener("click", function () {
+            sp.style.background = "#cfdfeb";
+            rj.style.background = "";
+            pr.style.background = "";
+            estado = "SP";
+        });
+
+        rj.addEventListener("click", function () {
+            rj.style.background = "#cfdfeb";
+            sp.style.background = "";
+            pr.style.background = "";
+            estado = "RJ";
+        });
+
+        pr.addEventListener("click", function () {
+            pr.style.background = "#cfdfeb";
+            rj.style.background = "";
+            sp.style.background = "";
+            estado = "PR";
+        });
+
+        buscar.addEventListener("click", function () {
+            buscaapi();
+        });
+
+        cidade.addEventListener("keypress", function (e) {
+            if (e.key === 'Enter') {
+                buscaapi();
+            }
+        });
+
+        entrar.addEventListener("click", function () {
+            loginbox.className = 'login showf';
+            logar.className = 'logar';
+            criar.className = 'criar';
+            mensagem.innerHTML = '';
+        });
+
+        sair.addEventListener("click", function () {
+            localStorage.removeItem('token');
+            verificarLogin();
+        });
+
+        fechar.addEventListener("click", function () {
+                loginbox.className = 'login';
+        });
+
+        criarconta.addEventListener("click", function () {
+            logar.className = 'logar hidden';
+            criar.className = 'criar show';
+            mensagem.innerHTML = '';
+        })
+
+        bcriar.addEventListener('click', () => {
+            criarapi();
+        });
+
+        blogar.addEventListener('click', () => {
+            loginapi();
         });
 
     </script>
