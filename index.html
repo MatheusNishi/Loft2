@@ -670,7 +670,8 @@
 
         function buscaapi() {
             var site = document.getElementsByName("city")[0].value;
-            var sitef = (site.normalize('NFD')).replace(/\s/g, '');
+            var siten = site.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+            var sitef = siten.replace(/\s/g, '');
             var label = site.toUpperCase();
 
             axios.get('https://www.quandl.com/api/v3/datasets/CITYPOP/CITY_' + sitef + estado + 'BRAZIL.json?api_key=YPQ_7Tz1GuGtRh_QK_GV')
