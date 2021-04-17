@@ -74,6 +74,13 @@
             vertical-align: middle;
         }
 
+
+        .conteinerlog {
+            max-width: 420px;
+            vertical-align: middle;
+            display: none;
+        }
+
         .conteiner1 {
             font-size: 3.5rem;
             line-height: 4.25rem;
@@ -401,6 +408,7 @@
             color: #ff3232;
         }
 
+
         @media only screen and (max-width: 600px) {
             main {
                 width: 360px;
@@ -600,6 +608,10 @@
                 <div class="conteiner1">Apês sem mistérios</div>
                 <div class="conteiner2">Encontre o seu apartamento com toda a facilidade e a assessoria da Loft.</div>
             </div>
+            <div class="conteinerlog">
+                <div class="conteiner1">APIs sem mistérios</div>
+                <div class="conteiner2">Encontre a população com toda a facilidade e a assessoria da Loft.</div>
+            </div>
             <div class="box">
                 <div class="b1">
                     Encontre o apartamento dos seus sonhos
@@ -665,6 +677,8 @@
             boxsenha2 = document.getElementById('senhalogar'),
             boxemail2 = document.getElementById('emaillogar'),
             mensagemerro = document.querySelector('.mensagemerro'),
+            conteiner = document.querySelector('.conteiner'),
+            conteinerlog = document.querySelector('.conteinerlog'),
             estado,
             dados;
 
@@ -706,11 +720,15 @@
                 sair.className = 'itemexclusivosair showf';
                 box.className = 'box hidden';
                 logado.className = 'box logado show';
+                conteiner.className = 'conteiner hidden';
+                conteinerlog.className = 'conteinerlog show';
             } else {
                 entrar.className = 'itemexclusivo';
                 sair.className = 'itemexclusivosair';
                 box.className = 'box';
                 logado.className = 'logado';
+                conteiner.className = 'conteiner';
+                conteinerlog.className = 'conteinerlog';
             }
         };
 
