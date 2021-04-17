@@ -662,6 +662,8 @@
             boxverificarsenha = document.getElementById('senhaverificar'),
             boxsenha = document.getElementById('senhacriar'),
             boxemail = document.getElementById('emailcriar'),
+            boxsenha2 = document.getElementById('senhalogar'),
+            boxemail2 = document.getElementById('emaillogar'),
             mensagemerro = document.querySelector('.mensagemerro'),
             estado,
             dados;
@@ -725,9 +727,12 @@
                         loginbox.className = 'login';
                         blurback.className = 'blurback';
                     }, 1000);
+                    document.getElementById('senhalogar').value = '';
+                    document.getElementById('emaillogar').value = '';
                 })
                 .catch((err) => {
                     mensagem.innerHTML = err.response.data.error;
+                    document.getElementById('senhalogar').value = '';
                 });
         };
 
@@ -746,9 +751,14 @@
                             mensagem.innerHTML = '';
                             blurback.className = 'blurback show';
                         }, 1000);
+                        document.getElementById('senhaverificar').value = '';
+                        document.getElementById('senhacriar').value = '';
+                        document.getElementById('emailcriar').value = '';
                     })
                     .catch((err) => {
                         mensagem.innerHTML = err.response.data.error;
+                        document.getElementById('senhaverificar').value = '';
+                        document.getElementById('senhacriar').value = '';
 
                     });
         };
@@ -789,6 +799,36 @@
                 boxemail.style.borderColor = "#f50000";
             } else {
                 boxemail.style.borderColor = "";
+            }
+        });
+
+        boxemail2.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                loginapi();
+            }
+        });
+
+        boxsenha2.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                loginapi();
+            }
+        });
+
+        boxsenha.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && (boxsenha.value).length >= 3 && (boxemail.value).length >= 3 && boxverificarsenha.value == boxsenha.value) {
+                criarapi();
+            }
+        });
+
+        boxverificarsenha.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && (boxsenha.value).length >= 3 && (boxemail.value).length >= 3 && boxverificarsenha.value == boxsenha.value) {
+                criarapi();
+            }
+        });
+
+        boxemail.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && (boxsenha.value).length >= 3 && (boxemail.value).length >= 3 && boxverificarsenha.value == boxsenha.value) {
+                criarapi();
             }
         });
 
@@ -849,6 +889,11 @@
             criar.className = 'criar';
             mensagem.innerHTML = '';
             blurback.className = 'blurback show';
+            document.getElementById('senhaverificar').value = '';
+            document.getElementById('senhacriar').value = '';
+            document.getElementById('emailcriar').value = '';
+            document.getElementById('senhalogar').value = '';
+            document.getElementById('emaillogar').value = '';
         });
 
         sair.addEventListener("click", function () {
@@ -865,7 +910,7 @@
             logar.className = 'logar hidden';
             criar.className = 'criar show';
             mensagem.innerHTML = '';
-        })
+        });
 
         bcriar.addEventListener('click', () => {
             criarapi();
