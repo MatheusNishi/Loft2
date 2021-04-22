@@ -329,9 +329,9 @@
             position: fixed;
             top: 50%;
             left: 50%;
-            height: 400px;
+            height: 450px;
             width: 300px;
-            margin: -200px 0px 0px -150px;
+            margin: -225px 0px 0px -150px;
             justify-content: space-around;
         }
 
@@ -408,6 +408,17 @@
             color: #ff3232;
         }
 
+        .semlogin {
+            align-items: center;
+            align-content: center;
+            font-family: HelveticaNowText-Regular,Arial,sans-serif;
+            color: #ff3232;
+        }
+
+        .mensagem {
+            color: #ff3232;
+            font-weight: bold;
+        }
 
         @media only screen and (max-width: 600px) {
             main {
@@ -587,15 +598,20 @@
         <div class="fechar">X</div>
         <div class="logar">
             <div class="logartitulo">Entrar</div><br>
+            <div>Email (min 3 caracteres)</div>
             <input type="text" class="b2b1text" id="emaillogar" placeholder="Seu email" /><br><br>
+            <div>Senha (min 3 caracteres)</div>
             <input type="password" class="b2b1text" id="senhalogar" placeholder="Sua senha" /><br><br>
             <input type="submit" class="b2c" style="margin: 0" id="botaologar" value="Enviar" /><br><br>
             <div class="criarconta">Criar Conta</div>
         </div>
         <div class="criar">
             <div class="logartitulo">Criar Conta</div><br>
+            <div>Email (min 3 caracteres)</div>
             <input type="text" class="b2b1text" id="emailcriar" placeholder="Seu email" /><br><br>
+            <div>Senha (min 3 caracteres)</div>
             <input type="password" class="b2b1text" id="senhacriar" placeholder="Sua senha" /><br><br>
+            <div>Repita Senha (min 3 caracteres)</div>
             <input type="password" class="b2b1text" id="senhaverificar" placeholder="Repita sua senha" /><br><br>
             <input type="submit" class="b2c" style="margin: 0" id="botaocriar" value="Enviar" /><br><br>
         </div>
@@ -625,7 +641,8 @@
                         <div class="b2b1">Selecione</div>
                         <div class="b2b2"><svg xmlns="http://www.w3.org/2000/svg"><path d="M12 14.61L17.3124 9.28995C17.6985 8.90335 18.3244 8.90335 18.7104 9.28995C19.0965 9.67656 19.0965 10.3034 18.7104 10.69L12.699 16.71C12.3612 17.0483 11.8398 17.0906 11.4561 16.8369C11.4012 16.8007 11.3492 16.7584 11.301 16.71L5.28954 10.69C4.90349 10.3034 4.90349 9.67656 5.28954 9.28995C5.67559 8.90335 6.3015 8.90335 6.68755 9.28995L12 14.61Z"></path></svg></div>
                     </div>
-                    <div class="b2c">Buscar apartamentos</div>
+                    <div class="b2c" id="botaoerro">Buscar apartamentos</div>
+                    <span class="semlogin"></span>
                 </div>
             </div>
             <div class="box logado">
@@ -642,6 +659,7 @@
                         <input type="text" name="city" class="b2b1text" id="buscacidade" placeholder="Digite a cidade" />
                     </div>
                     <div class="b2c" id="botaocidade">Buscar cidade</div>
+                    <br>
                     <span class="mensagemerro"></span>
                 </div>
             </div>
@@ -679,10 +697,17 @@
             mensagemerro = document.querySelector('.mensagemerro'),
             conteiner = document.querySelector('.conteiner'),
             conteinerlog = document.querySelector('.conteinerlog'),
+            botaoerro = document.getElementById('botaoerro'),
+            semlogin = document.querySelector('.semlogin'),
             estado,
             dados;
 
         bcriar.disabled = true;
+        bcriar.style.backgroundColor = '#ff9f80';
+        bcriar.style.cursor = 'default';
+        blogar.disabled = true;
+        blogar.style.backgroundColor = '#ff9f80';
+        blogar.style.cursor = 'default';
 
         function buscaapi() {
             var site = document.getElementsByName("city")[0].value;
@@ -710,7 +735,7 @@
                 })
                 .catch((err) => {
                     JSC.Chart("chartDiv", {});
-                    mensagemerro.innerHTML = 'Cidade digitada incorretamente ou não exitente no banco de dados';
+                    mensagemerro.innerHTML = 'Cidade digitada incorretamente ou não existente no banco de dados';
                 })
         };
 
@@ -744,7 +769,7 @@
                     window.setTimeout(function () {
                         loginbox.className = 'login';
                         blurback.className = 'blurback';
-                    }, 1000);
+                    }, 1100);
                     document.getElementById('senhalogar').value = '';
                     document.getElementById('emaillogar').value = '';
                 })
@@ -755,7 +780,6 @@
         };
 
         function criarapi() {
-
                 axios.post('https://reqres.in/api/register', {
                     email: document.getElementById('emailcriar').value,
                     password: document.getElementById('senhacriar').value
@@ -768,7 +792,7 @@
                             criar.className = 'criar';
                             mensagem.innerHTML = '';
                             blurback.className = 'blurback show';
-                        }, 1000);
+                        }, 1100);
                         document.getElementById('senhaverificar').value = '';
                         document.getElementById('senhacriar').value = '';
                         document.getElementById('emailcriar').value = '';
@@ -790,18 +814,52 @@
             }
 
             if ((boxsenha.value).length >= 3 && (boxemail.value).length >= 3 && boxverificarsenha.value == boxsenha.value) {
+                bcriar.style.backgroundColor = '';
+                bcriar.style.cursor = '';
                 bcriar.disabled = false;
             } else {
+                bcriar.style.backgroundColor = '#ff9f80';
+                bcriar.style.cursor = 'default';
                 bcriar.disabled = true;
             }
 
         };
+
+        function verificabotaologar() {
+            if ((boxsenha2.value).length >= 3 && (boxemail2.value).length >= 3) {
+                blogar.style.backgroundColor = '';
+                blogar.style.cursor = '';
+                blogar.disabled = false;
+            } else {
+                blogar.style.backgroundColor = '#ff9f80';
+                blogar.style.cursor = 'default';
+                blogar.disabled = true;
+            }
+        }
+
+        botaoerro.addEventListener("click", function () {
+            if (localStorage.getItem('token') != 'QpwL5tke4Pnpja7X4') {
+                semlogin.innerHTML = 'Você precisa estar logado para completar essa ação';
+                window.setTimeout(function () {
+                    semlogin.innerHTML = '';
+                }, 3000);
+            }
+        });
 
         boxverificarsenha.addEventListener('keyup', function () {
             verificarsenha();
         });
 
         boxsenha.addEventListener('keyup', function () {
+            if ((boxsenha.value).length < 3) {
+                boxsenha.style.borderColor = "#f50000";
+            } else {
+                boxsenha.style.borderColor = "";
+            }
+            verificarsenha();
+        });
+
+        boxsenha.addEventListener('click', function () {
             if ((boxsenha.value).length < 3) {
                 boxsenha.style.borderColor = "#f50000";
             } else {
@@ -820,15 +878,53 @@
             }
         });
 
-        boxemail2.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                loginapi();
+        boxemail.addEventListener('click', function () {
+            verificarsenha();
+
+            if ((boxemail.value).length < 3) {
+                boxemail.style.borderColor = "#f50000";
+            } else {
+                boxemail.style.borderColor = "";
             }
         });
 
-        boxsenha2.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                loginapi();
+        boxemail2.addEventListener('keyup', function (e) {
+            verificabotaologar();
+            if ((boxemail2.value).length < 3) {
+                boxemail2.style.borderColor = "#f50000";
+            } else {
+                boxemail2.style.borderColor = "";
+                if (e.key === 'Enter' && (boxsenha2.value).length < 3 && (boxemail2.value).length < 3) {
+                    loginapi();
+                }
+            }
+        });
+
+        boxsenha2.addEventListener('keyup', function (e) {
+            verificabotaologar();
+            if ((boxsenha2.value).length < 3) {
+                boxsenha2.style.borderColor = "#f50000";
+            } else {
+                boxsenha2.style.borderColor = "";
+                if (e.key === 'Enter' && (boxsenha2.value).length < 3 && (boxemail2.value).length < 3) {
+                    loginapi();
+                }
+            }
+        });
+
+        boxemail2.addEventListener('click', function () {
+            if ((boxemail2.value).length < 3) {
+                boxemail2.style.borderColor = "#f50000";
+            } else {
+                boxemail2.style.borderColor = "";
+            }
+        });
+
+        boxsenha2.addEventListener('click', function () {
+            if ((boxsenha2.value).length < 3) {
+                boxsenha2.style.borderColor = "#f50000";
+            } else {
+                boxsenha2.style.borderColor = "";
             }
         });
 
@@ -849,8 +945,6 @@
                 criarapi();
             }
         });
-
-        verificarLogin();
 
         sp.addEventListener("click", function () {
             sp.style.background = "#cfdfeb";
@@ -916,6 +1010,7 @@
 
         sair.addEventListener("click", function () {
             localStorage.removeItem('token');
+            JSC.Chart("chartDiv", {});
             verificarLogin();
         });
 
@@ -937,6 +1032,8 @@
         blogar.addEventListener('click', () => {
             loginapi();
         });
+
+        verificarLogin();
 
     </script>
 
