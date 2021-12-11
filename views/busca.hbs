@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Buscas</title>
+    </head>
+    <body>
+        <h1>Buscas</h1>
+        <form action="busca" method="post" accept-charset="utf-8">
+            <label for="texto">Conteudo: </label>
+            <input type="text" name="texto" value="" />
+            <input type="submit" value="Enviar" />
+        </form>
+
+        <form action="busca" method="get" accept-charset="utf-8">
+            <label for="busca">Busca</label>
+            <input type="text" nome="busca" />
+            <input type="submit" value="Buscar" />
+        </form>
+        <ul>
+            {{#posts}}
+            <li>{{content}}</li>
+            {{/posts}}
+        </ul>
+    </body>
+</html>
