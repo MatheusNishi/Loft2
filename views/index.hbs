@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Compra e Venda de Apartamentos de Forma Descomplicada</title>
-    <link rel="icon" type="imagem/png" href="../imagem/icon.png" />
+    <link rel="icon" type="imagem/png" href="../imagem/icon.png"/>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jscharting.com/latest/jscharting.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/style.css">
@@ -69,15 +69,34 @@
         <div class="fechar">X</div>
         <div class="logar">
             <div class="logartitulo">Entrar</div><br>
+                <form action="" method="post">
+                    <label for="emaillogar">Email (min 3 caracteres)</label>
+                    <input type="text" class="b2b1text" name="emaillogar" id="emaillogar" placeholder="Seu email"><br><br>
+                    <label for="senhalogar">Email (min 3 caracteres)</label>
+                    <input type="password" class="b2b1text" name="senhalogar" id="senhalogar" placeholder="Sua senha"><br><br>
+                    <input type="submit" class="b2c" style="margin: 0" id="botaologar" value="Enviar">
+                </form><br>
+                <div class="criarconta">Criar Conta</div>
+            <!--
             <div>Email (min 3 caracteres)</div>
             <input type="text" class="b2b1text" id="emaillogar" placeholder="Seu email" /><br><br>
             <div>Senha (min 3 caracteres)</div>
             <input type="password" class="b2b1text" id="senhalogar" placeholder="Sua senha" /><br><br>
             <input type="submit" class="b2c" style="margin: 0" id="botaologar" value="Enviar" /><br><br>
-            <div class="criarconta">Criar Conta</div>
+            -->
         </div>
         <div class="criar">
             <div class="logartitulo">Criar Conta</div><br>
+                <form action="" method="post">
+                    <label for="emailcriar">Email (min 3 caracteres)</label>
+                    <input type="text" class="b2b1text" name="emailcriar"name="emaillogar" id="emailcriar" placeholder="Seu email" /><br><br>
+                    <label for="senhacriar">Senha (min 3 caracteres)</label>
+                    <input type="password" class="b2b1text" name="senhacriar" id="senhacriar" placeholder="Sua senha" /><br><br>
+                    <div>Repita Senha (min 3 caracteres)</div>
+                    <input type="password" class="b2b1text" id="senhaverificar" placeholder="Repita sua senha" /><br><br>
+                    <input type="submit" class="b2c"style="margin: 0" id="botaocriar" value="Enviar" />
+                </form>
+            <!--
             <div>Email (min 3 caracteres)</div>
             <input type="text" class="b2b1text" id="emailcriar" placeholder="Seu email" /><br><br>
             <div>Senha (min 3 caracteres)</div>
@@ -85,6 +104,7 @@
             <div>Repita Senha (min 3 caracteres)</div>
             <input type="password" class="b2b1text" id="senhaverificar" placeholder="Repita sua senha" /><br><br>
             <input type="submit" class="b2c" style="margin: 0" id="botaocriar" value="Enviar" /><br>
+            -->
         </div>
         <span class="mensagem"></span>
     </div>
