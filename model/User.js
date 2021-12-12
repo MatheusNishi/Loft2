@@ -17,6 +17,7 @@ module.exports = class User {
             return false;
         } else {
             await db.collection('users').insertOne({ email: email, senha: senha });
+            conn.close();
             return true;
         }
     }
@@ -26,10 +27,14 @@ module.exports = class User {
         const db = conn.db();
         if (await db.collection('users').find({ email: email }).toArray()) {
             if(await db.collection('users').find({ email: email, senha: senha }).toArray()) {
-                // retorna positivo
+                conn.close();
+                return true;
             }
+            conn.close();
+            return false;
         } else {
-            // retorna negativo
+            conn.close();
+            return false;
         }
     }
 }
