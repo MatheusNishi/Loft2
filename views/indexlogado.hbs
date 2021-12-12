@@ -157,6 +157,24 @@
         </main>
     </div>
 
+    <h1>Buscas</h1>
+    <form action="" method="post" accept-charset="utf-8">
+        <label for="texto">Conteudo: </label>
+        <input type="text" name="texto" />
+        <input type="submit" value="Enviar" />
+    </form>
+
+    <form action="" method="get" accept-charset="utf-8">
+        <label for="busca">Busca: </label>
+        <input type="text" name="busca" />
+        <input type="submit" value="Buscar" />
+    </form>
+    <ul>
+        {{#posts}}
+        <li>{{texto}}</li>
+        {{/posts}}
+    </ul>
+
     <div class="espaco"></div>
     <span class="apierro"></span>
     <div class="grafico" id="chartDiv"></div>

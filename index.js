@@ -9,45 +9,51 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended: false}));
+//app.use(cookieParser());
 
-app.get('/', (req, res) =>{
-    res.render('index');
-});
-app.get('/a', (req, res) =>{
-    res.end('<h1>Pagina a</h1>');
-});
-app.get('/busca', async (req, res) =>{
+app.get('/', async (req, res) =>{
     const busca = req.query.busca;
     const posts = await Post.find(busca);    
     //let busca = req.query.busca;
-    res.render('busca', { posts: posts });
+    res.render('indexlogado', { posts: posts });
     //res.end();
 });
-app.post('/busca', async (req, res) => {
+app.post('/', async (req, res) =>{
+    // const emaillogin = req.body.emaillogin;
+    // const senhalogin = req.body.senhalogin;
+    // const emailcriar = req.body.emailcriar;
+    // const senhacriar = req.body.senhacriar;
     const texto = req.body.texto;
-    Post.insert(texto);
-    res.redirect('busca');
+    if(texto){
+        await Post.insert(texto);
+        res.redirect('/');
+    } else {
+        res.render('indexlogado');
+
+    }
+    // if(emaillogin && senhalogin)
+    //     User.logarConta(emaillogin, senhalogin);
+    // else(emailcriar && senhacriar)
+    //     User.criarConta(emailcriar, senhacriar);
+
+    // if (req.cookies && req.cookies.login) {
+    //     res.render('indexlogado', {
+
+    //     })
+    // }
+        
 });
-app.post('/login', (req, res) => {
-    let login = req.body.login;
-    let pass = req.body.password;
-    res.end();
-});
-
-http.createServer(app).listen(8008);
-
-// const MongoClient = require('mongodb').MongoClient;
-
-// MongoClient.connect('mongodb://localhost:27017/mongo-test', (err, conn) => {
-//     if (err) throw err;
-//     const db = conn.db();
-//     console.log('Conexao estabelecida');
-//     db.collection('posts').insertOne({
-//         nome: 'Pedro'
-//     });
-//     db.collection('posts').find().toArray().then((res) => {
-//         console.log(res);
-//         conn.close();
-//     });
-
+// app.get('/busca', async (req, res) =>{
+//     const busca = req.query.busca;
+//     const posts = await Post.find(busca);    
+//     //let busca = req.query.busca;
+//     res.render('busca', { posts: posts });
+//     //res.end();
 // });
+// app.post('/busca', async (req, res) => {
+//     const texto = req.body.texto;
+//     Post.insert(texto);
+//     res.redirect('busca');
+// });
+
+http.createServer(app).listen(8000);

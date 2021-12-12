@@ -14,13 +14,13 @@
         </form>
 
         <form action="busca" method="get" accept-charset="utf-8">
-            <label for="busca">Busca</label>
-            <input type="text" nome="busca" />
+            <label for="busca">Busca: </label>
+            <input type="text" name="busca" />
             <input type="submit" value="Buscar" />
         </form>
         <ul>
             {{#posts}}
-            <li>{{content}}</li>
+            <li>{{texto}}</li>
             {{/posts}}
         </ul>
     </body>
