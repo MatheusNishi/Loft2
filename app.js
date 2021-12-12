@@ -90,4 +90,4 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true},()=>{
     console.log('db connected');
 })
 
-http.createServer(app).listen(8000);
+http.createServer(app).listen(process.env.PORT || 8000);
