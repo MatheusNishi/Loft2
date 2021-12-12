@@ -23,7 +23,7 @@ module.exports = class User {
     }
 
     static async logarConta(email, senha) {
-        const conn = await MongoClient.connect('mongodb://localhost:27017/mongo-test');
+        const conn = await MongoClient.connect(process.env.MONGODB_URI);
         const db = conn.db();
         if (await db.collection('users').find({ email: email }).toArray()) {
             if(await db.collection('users').find({ email: email, senha: senha }).toArray()) {

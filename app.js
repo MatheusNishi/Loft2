@@ -86,7 +86,7 @@ app.get('/image', async(req, res) => {
     res.json(image)
 });
 
-mongoose.connect('mongodb://localhost:27017/mongo-test', { useNewUrlParser: true},()=>{
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true},()=>{
     console.log('db connected');
 })
 
