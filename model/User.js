@@ -24,7 +24,6 @@ module.exports = class User {
             return true;
         } else {
             conn.close();
-            console.log(0);
             return false;
         }
     }

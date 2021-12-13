@@ -5,14 +5,14 @@ let http = require ('http'),
     path = require ('path'),
     Post = require ('./model/Post'),
     User = require ('./model/User'),
-    multer = require('multer'),
-    upload = multer({ dest: 'uploads/' }),
-    flash = require('connect-flash'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
-    mongoose = require('mongoose'),
-    Model = require('./model/model'),
     sha256 = require('sha256'),
+    flash = require('express-flash-notification'),
+    mongoose = require('mongoose'),
+    Model = require('./model/Imagem'),
+    multer = require('multer'),
+    upload = multer({ dest: 'uploads/' }),
     app = express();
 
 app.set('view engine', 'hbs');
@@ -26,6 +26,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false }
 }));
+app.use(flash(app));
 
 app.get('/', async (req, res) =>{
     const busca = req.query.busca;
@@ -47,25 +48,27 @@ app.post('/', async (req, res) =>{
 
 app.post('/create', async (req, res)=>{
     const emailcriar = req.body.emailcriar;
-    const senhacriar = req.body.senhacriar;
-    console.log(emailcriar);
-    console.log(senhacriar);
+    const senhacriar = sha256(req.body.senhacriar);
 
-    await User.criarConta(emailcriar, senhacriar)
+    if (await User.criarConta(emailcriar, senhacriar)) {
         res.redirect('/');
+    } else {
+        res.render('index', {erro: 'Email ja cadastrado'});
+    }
 });
 
 app.post('/login', async (req, res) =>{
     const emaillogin = req.body.emaillogar;
-    const senhalogin = req.body.senhalogar;
-    console.log(emaillogin);
-    console.log(senhalogin);
+    const senhalogin = sha256(req.body.senhalogar);
     if (await User.logarConta(emaillogin, senhalogin)) {
         req.session.login = emaillogin;
-    }
     res.redirect('/');
+    } else {
+        res.render('index', {erro: 'Email ou senha incorretos'});
+    }
 
 });
+
 app.get('/logout', async (req, res) =>{
     req.session.destroy();
     res.redirect('/');
