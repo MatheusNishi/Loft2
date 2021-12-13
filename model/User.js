@@ -1,14 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 
 module.exports = class User {
-    // static find() {
-    //     return client.connect(
-    //         'mongodb://localhost:27017/mongo-test',
-    //         {useNewUrlParser:true}).then((client) => {
-    //             let db = client.db('mongo-test');
-    //             return db.collection('users').find({}).toArray();
-    //         });
-    // }
     static async criarConta(email, senha) {
         const conn = await MongoClient.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mongo-test');
         const db = conn.db();

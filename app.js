@@ -43,7 +43,6 @@ app.post('/', async (req, res) =>{
         await Post.insert(texto);
         res.redirect('/');
     }
-    console.log(texto);
 });
 
 app.post('/create', async (req, res)=>{
