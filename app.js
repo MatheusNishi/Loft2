@@ -5,15 +5,23 @@ let http = require ('http'),
     path = require ('path'),
     Post = require ('./model/Post'),
     User = require ('./model/User'),
+    Rimage = require ('./model/Rimage'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
     sha256 = require('sha256'),
-    flash = require('express-flash-notification'),
     mongoose = require('mongoose'),
-    Model = require('./model/Imagem'),
+    Image = require('./model/Image'),
     multer = require('multer'),
-    upload = multer({ dest: 'uploads/' }),
     app = express();
+
+var upload = multer({ 
+    storage: multer.diskStorage({
+        destitation:(req,file,cb)=> {
+            cb(null, "./uploads");
+        },
+        filename: function(req, file, callback) {callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+    })});
 
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
@@ -26,11 +34,11 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false }
 }));
-app.use(flash(app));
 
 app.get('/', async (req, res) =>{
     const busca = req.query.busca;
     const posts = await Post.find(busca);
+    const images = await Rimage.find();
     if (req.session && req.session.login) {
         res.render('indexlogado', { posts: posts });
     } else {
@@ -74,29 +82,18 @@ app.get('/logout', async (req, res) =>{
     res.redirect('/');
 });
 
-// app.post('/upload', upload.single('arquivo'), async (req, res, next) => {
-//     const file = req.file;
-//     if (!file) {
-//         const error = new Error('Please upload a file');
-//         error.httpStatusCode = 400;
-//         return next("Hey error");
-//     }
+app.post('/upload', upload.single('arquivo'), async (req, res, next) => {
+    var x = new Image;
+    x.title = req.body.title;
+    x.content = req.body.content;
+    x.image = req.file.filename;
+    x.save((err,doc)=>{
+        if(err)
+            console.log(err);
+        });
+    res.redirect('/');
+});
 
-//     const imagepost = new model({
-//         image: file.path
-//     });
-
-//     const savedimage = await imagepost.save()
-//     res.json(savedimage)
-// });
-
-// app.get('/image', async(req, res) => {
-//     const image = await model.find()
-//     res.json(image)
-// });
-
-// mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mongo-test', { useNewUrlParser: true},()=>{
-//     console.log('db connected');
-// })
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mongo-test', { useNewUrlParser: true},()=>{});
 
 http.createServer(app).listen(process.env.PORT || 8000);

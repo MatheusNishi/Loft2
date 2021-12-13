@@ -1,0 +1,11 @@
+const MongoClient = require('mongodb').MongoClient;
+
+module.exports = class Rimage {
+    static async find () {
+        const conn = await MongoClient.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mongo-test');
+        const db = conn.db();
+        let result = await db.collection('images').find().toArray();
+        conn.close();
+        return result;
+    }
+}
