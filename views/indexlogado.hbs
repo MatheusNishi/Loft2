@@ -54,8 +54,11 @@
                     </div>
                 </div>
                 <div class="subitem pr0">
-                    <div class="itemexclusivo">Entrar</div>
+                    <div class="itemexclusivo" style="display: none;">Entrar</div>
                     <div class="itemexclusivosair">Sair</div>
+                    <form action="/logout" method="get">
+                        <input type="submit" style="margin: 0" value="Sair">
+                    </form>
                 </div>
 
                 <div class="opcao">
@@ -142,18 +145,18 @@
     </div>
 
     <h1>Buscas</h1>
-    <form action="" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+    <form action="" method="post" accept-charset="utf-8">
         <label for="texto">Conteudo: </label>
         <input type="text" name="texto" />
         <input type="submit" value="Enviar" />
     </form>
-
+<!--
     <form action="upload" method="post" enctype="multipart/form-data" accept-charset="utf-8">
         <label for="arquivo">Imagem ou video: </label>
         <input type="file" name="arquivo" />
         <input type="submit" value="Enviar" />
     </form>
-
+-->
     <form action="" method="get" accept-charset="utf-8">
         <label for="busca">Busca: </label>
         <input type="text" name="busca" />
@@ -248,7 +251,7 @@
                 conteinerlog.className = 'conteinerlog show';
             } else {
                 entrar.className = 'itemexclusivo';
-                sair.className = 'itemexclusivosair';
+                sair.className = 'itemexclusivosair showf';
                 box.className = 'box';
                 logado.className = 'logado';
                 conteiner.className = 'conteiner';
@@ -508,9 +511,10 @@
         });
 
         sair.addEventListener("click", function () {
-            localStorage.removeItem('token');
-            JSC.Chart("chartDiv", {});
-            verificarLogin();
+            axios.get('/logout');
+            //localStorage.removeItem('token');
+            //JSC.Chart("chartDiv", {});
+            //verificarLogin();
         });
 
         fechar.addEventListener("click", function () {

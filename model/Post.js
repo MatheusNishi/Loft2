@@ -2,7 +2,7 @@ const MongoClient = require('mongodb').MongoClient;
 
 module.exports = class Post {
     static async find (busca) {
-        const conn = await MongoClient.connect(process.env.MONGODB_URI);
+        const conn = await MongoClient.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mongo-test');
         const db = conn.db();
         let result;
         if(busca)
@@ -14,7 +14,7 @@ module.exports = class Post {
     }
 
     static async insert (texto) {
-        const conn = await MongoClient.connect(process.env.MONGODB_URI);
+        const conn = await MongoClient.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mongo-test');
         const db = conn.db();
         await db.collection('posts').insertOne({ texto: texto });
         conn.close();
